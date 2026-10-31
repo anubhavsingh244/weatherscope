@@ -109,9 +109,9 @@ export function rangeBarsOption(r: RangeBars): EChartsCoreOption {
     xAxis: { type: 'category', data: r.days.map((d) => d.slice(5)), axisLabel: { color: text } },
     yAxis: { type: 'value', name: '°C', axisLabel: { color: text } },
     series: [
-      { type: 'bar', stack: 'range', itemStyle: { color: 'transparent' }, silent: true, data: r.min },
+      { type: 'bar', stack: 'range', stackStrategy: 'all', itemStyle: { color: 'transparent' }, silent: true, data: r.min },
       {
-        type: 'bar', stack: 'range', barWidth: '40%', itemStyle: { color: '#f59e0b', borderRadius: 6 },
+        type: 'bar', stack: 'range', stackStrategy: 'all', barWidth: '40%', itemStyle: { color: '#f59e0b', borderRadius: 6 },
         label: { show: true, position: 'top', color: text, formatter: (p: { dataIndex: number }) => `${r.max[p.dataIndex]}°` },
         data: r.span,
       },

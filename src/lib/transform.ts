@@ -90,19 +90,21 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 /** Compare the most recent 365 days against the earlier "normal", month by month. */
 export function climateComparison(time: string[], values: (number | null)[], days = 365): Climate {
-  const valid = time.map((date, i) => ({ date, v: values[i] })).filter((x): x is { date: string; v: number } => x.v != null)
-  const cut = Math.max(0, valid.length - days)
-  const acc = (rows: typeof valid) => {
+  // Split the window by date position *before* dropping nulls, so gaps don't shift the boundary.
+  const all = time.map((date, i) => ({ date, v: values[i] }))
+  const cut = Math.max(0, all.length - days)
+  const acc = (rows: typeof all) => {
     const sum = Array(12).fill(0)
     const cnt = Array(12).fill(0)
     for (const r of rows) {
+      if (r.v == null) continue
       const m = Number(r.date.slice(5, 7)) - 1
       sum[m] += r.v
       cnt[m] += 1
     }
     return sum.map((s, m) => (cnt[m] ? +(s / cnt[m]).toFixed(1) : null))
   }
-  return { months: MONTHS, recent: acc(valid.slice(cut)), normal: acc(valid.slice(0, cut)) }
+  return { months: MONTHS, recent: acc(all.slice(cut)), normal: acc(all.slice(0, cut)) }
 }
 
 // ---------- Daily: range bars, sun arc ----------

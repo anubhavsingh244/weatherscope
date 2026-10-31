@@ -42,6 +42,15 @@ describe('history transforms', () => {
   })
 })
 
+describe('climateComparison with gaps', () => {
+  it('does not let missing values shift the recent window boundary', () => {
+    const c = climateComparison(['2021-01-31', '2021-02-01', '2021-02-02'], [10, null, 20], 2)
+    expect(c.normal[0]).toBe(10) // Jan 31 is outside the 2-day window
+    expect(c.recent[0]).toBeNull()
+    expect(c.recent[1]).toBe(20)
+  })
+})
+
 describe('daily transforms', () => {
   it('rangeBars computes the stacked span', () => {
     const r = rangeBars({
