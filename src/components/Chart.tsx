@@ -6,6 +6,9 @@ import {
   TooltipComponent,
   VisualMapComponent,
   LegendComponent,
+  CalendarComponent,
+  PolarComponent,
+  MarkLineComponent,
 } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import type { EChartsCoreOption } from 'echarts/core'
@@ -18,10 +21,21 @@ echarts.use([
   TooltipComponent,
   VisualMapComponent,
   LegendComponent,
+  CalendarComponent,
+  PolarComponent,
+  MarkLineComponent,
   CanvasRenderer,
 ])
 
-export function Chart({ option, height = 320 }: { option: EChartsCoreOption; height?: number }) {
+export function Chart({
+  option,
+  height = 320,
+  label = 'chart',
+}: {
+  option: EChartsCoreOption
+  height?: number
+  label?: string
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const chart = useRef<echarts.ECharts | null>(null)
 
@@ -41,5 +55,5 @@ export function Chart({ option, height = 320 }: { option: EChartsCoreOption; hei
     chart.current?.setOption(option, true)
   }, [option])
 
-  return <div ref={ref} style={{ width: '100%', height }} role="img" aria-label="chart" />
+  return <div ref={ref} style={{ width: '100%', height }} role="img" aria-label={label} />
 }

@@ -18,9 +18,16 @@ Pushes to `main` run `.github/workflows/deploy.yml` (lint, typecheck, test, buil
 `https://anubhavsingh244.github.io/weatherscope/`. One-time setup: repo **Settings → Pages → Source: GitHub Actions**.
 For other hosts, set `VITE_BASE=/` when building.
 
+## Features
+
+- Location search; the selected place is stored in the URL (`?lat=&lon=&name=`) so views are shareable
+- 7-day temperature range, wind rose, daylight arc and UV index
+- Hourly temperature/precipitation chart and hour × day heatmaps (temperature, rain probability)
+- History since 2015: calendar heatmap of daily mean temperature and a monthly climate comparison
+- Automatic light/dark theme
+
 ## Roadmap
 
-- [x] Location search, hourly chart, temperature and rain heatmaps (hour × day)
-- [ ] Historical calendar heatmap, climate comparison
-- [ ] Wind rose, UV / sun arc, 7-day range bars
-- [ ] Light/dark theme, URL-shareable location
+- [ ] Code-split ECharts to shrink the initial bundle
+- [ ] Map layer (radar / temperature overlay)
+- [ ] Precipitation history and units toggle (°C/°F, km/h/mph)
